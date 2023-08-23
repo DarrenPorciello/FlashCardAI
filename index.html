@@ -43,6 +43,7 @@
             const messageElement = document.createElement('div');
             messageElement.classList.add('message');
             messageElement.classList.add('message--sent');
+            //console.log(messageText);
             messageElement.innerHTML = `
             <div class="message__text">${messageText}</div>
             `;
@@ -61,6 +62,25 @@
             .then(data => {
                 let newAssistantMessage = {"role": "assistant", "content": `${data.completion.content}`}
                 messages.push(newAssistantMessage)
+                console.log(data.completion.content);
+                text = data.completion.content;
+                //Seperation into question and answer elements
+                const pairs = text.split('\n').filter(pair => pair.trim() !== '');
+
+                // Separate questions and answers
+                const questions = [];
+                const answers = [];
+
+                pairs.forEach(pair => {
+                    const [question, answer] = pair.split(' [');
+                    questions.push(question.trim());
+                    answers.push(answer.slice(0, -1).trim());
+                });
+
+                console.log("Questions:", questions);
+                console.log("Answers:", answers);
+
+                
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message');
                 messageElement.classList.add('message--sent');
