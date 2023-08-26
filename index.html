@@ -63,19 +63,28 @@
                 let newAssistantMessage = {"role": "assistant", "content": `${data.completion.content}`}
                 messages.push(newAssistantMessage)
                 console.log(data.completion.content);
-                text = data.completion.content;
+                let text = data.completion.content;
                 //Seperation into question and answer elements
-                const pairs = text.split('\n').filter(pair => pair.trim() !== '');
+                const cleanedText = text
+                    .split('\n')        // Split text into lines
+                    .filter(line => line.trim() !== '') // Remove empty lines
+                    .join(' ');         // Join lines back together without extra spaces
+
+                console.log(cleanedText)
+
+                const pairs = cleanedText.split('\n').filter(pair => pair.trim() !== '');
 
                 // Separate questions and answers
                 const questions = [];
                 const answers = [];
 
-                pairs.forEach(pair => {
-                    const [question, answer] = pair.split(' [');
-                    questions.push(question.trim());
-                    answers.push(answer.slice(0, -1).trim());
-                });
+                const regex = /\d+\.\s(.*?)\s\[(.*?)\]/g;
+                let match;
+
+                while ((match = regex.exec(cleanedText)) !== null) {
+                    questions.push(match[1]);
+                    answers.push(match[2]);
+                }
 
                 console.log("Questions:", questions);
                 console.log("Answers:", answers);
@@ -92,8 +101,10 @@
                 chatLog.appendChild(messageElement);
                 chatLog.scrollTop = chatLog.scrollHeight;
 
-
-                messageElement.innerHTML = createFlashcards();
+                const cardGrid = document.createElement('div');
+                cardGrid.classList.add('card-grid');
+                cardGrid.innerHTML = createFlashcards();
+                chatLog.appendChild(cardGrid)
 
                 function createFlashcards() {
                     let flashcardHTML = "";

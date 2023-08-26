@@ -23,7 +23,7 @@ app.post("/", async (req, res) => {
     const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [
-            {"role": "system", "content": "You are going to create study questions based off of content given. Create only 'n' questions based off of the information provided, where 'n' is the number provided as the first character in the query. Provide the answers in brackets. Do not label questions with numbers."},
+            {"role": "system", "content": "You are going to create study questions based off of content given. Create only 'n' questions based off of the information provided, where 'n' is the number provided as the first character in the query. You absolutely must provide the answers within square brackets. Absolutely do not label questions with numbers."},
             //{role: "user", content: `${message}`},
             ...messages
 
