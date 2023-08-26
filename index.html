@@ -81,6 +81,8 @@
                 console.log("Answers:", answers);
 
                 
+
+                
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message');
                 messageElement.classList.add('message--sent');
@@ -89,6 +91,32 @@
                 `;
                 chatLog.appendChild(messageElement);
                 chatLog.scrollTop = chatLog.scrollHeight;
+
+
+                messageElement.innerHTML = createFlashcards();
+
+                function createFlashcards() {
+                    let flashcardHTML = "";
+                    let counter = 0;
+                    for (question of questions) {
+                        flashcardHTML += `
+                            <div class="flashcard">
+                                <div class="card-content">
+                                    <div class="card-front">
+                                        ${question}
+                                    </div>
+                                    <div class="card-back">
+                                        ${answers[counter]}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        counter += 1;
+
+                    }
+                    return flashcardHTML;
+                }
+
             })
         })
     </script>
