@@ -5,6 +5,33 @@ body {
     background-color: #f0f0f0;
 }
 
+.input-container {
+    position: relative;
+    width: 80%;
+    max-width: 400px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none; /* Disable textarea resizing */
+    overflow: hidden; /* Hide any overflowing content */
+    transition: height 0.2s; /* Smoothly transition height changes */
+}
+
+/* Expand the textarea height as the content grows */
+textarea:focus, textarea:not(:focus) {
+    height: auto;
+}
+
+/* Add a subtle box shadow when focused */
+textarea:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -13,6 +40,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 
 
 .flashcard {
@@ -27,6 +55,9 @@ body {
     cursor: pointer;
     background-color: white;
     border-radius: 8px;
+    transform: perspective(1000px) rotateY(var(--rotate-y, 0))
+    translateY(var(--translate-y, 0));
+    
 }
 
 .flashcard:hover {
@@ -59,8 +90,10 @@ body {
     font-size: 18px;
     padding: 20px;
     border: 1px solid #ccc;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     box-sizing: border-box; /* Add this */
+    background-color: white;
 }
 
 .card-back {
