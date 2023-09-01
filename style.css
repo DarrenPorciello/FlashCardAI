@@ -17,8 +17,10 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    resize: none; /* Disable textarea resizing */
-    overflow: hidden; /* Hide any overflowing content */
+    resize: both; /* Disable textarea resizing */
+    overflow: visible; /* Hide any overflowing content */
+    min-height: 30vh;
+    max-height: 60vh;
     transition: height 0.2s; /* Smoothly transition height changes */
 }
 
