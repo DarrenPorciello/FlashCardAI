@@ -2,20 +2,24 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>GPT3.5 API</title>
+    <title>FlashcardAI</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
   </head>
+  <div class="black"></div>
   <body>
     <div class="container-xl">
     <main>
-        <h1>Flash Cards API</h1>
+        <h1>Welcome to FlashcardAI!</h1>
         <form action="">
-            <textarea id="message" name="message" placeholder="Type your message..."></textarea>
-            <label for="numericInput">Number of flash cards you would like to generate.</label>
+            <textarea id="message" name="message" placeholder="Type your content here..."></textarea>
+            <label class="googlefont" for="numericInput">Number of flash cards you would like to generate:</label>
             <input type="number" id="numericInput" min="0" max="50" value="1">
             <button type="submit">Send</button>
         </form>  
@@ -24,133 +28,6 @@
         </div>
     </div>
     </main>
-	<script>
-        let messages = []
-
-        const chatLog = document.getElementById('chat-log');
-        const message = document.getElementById('message');
-        const form = document.querySelector('form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            //Handling the number input
-            const numericInput = document.getElementById("numericInput");
-            const userNumber = parseFloat(numericInput.value);
-            console.log(userNumber)
-
-
-            const messageText = message.value;
-            const newMessage = {"role": "user", "content": `${userNumber}, ${messageText}`}
-            messages.push(newMessage)
-            message.value = '';
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message');
-            messageElement.classList.add('message--sent');
-            //console.log(messageText);
-            messageElement.innerHTML = `
-            <div class="message__text">${messageText}</div>
-            `;
-            chatLog.appendChild(messageElement);
-            chatLog.scrollTop = chatLog.scrollHeight;
-            fetch('http://localhost:3000', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    messages
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                let newAssistantMessage = {"role": "assistant", "content": `${data.completion.content}`}
-                messages.push(newAssistantMessage)
-                console.log(data.completion.content);
-                let text = data.completion.content;
-                //Seperation into question and answer elements
-                const cleanedText = text
-                    .split('\n')        // Split text into lines
-                    .filter(line => line.trim() !== '') // Remove empty lines
-                    .join(' ');         // Join lines back together without extra spaces
-
-                console.log(cleanedText)
-
-                const pairs = cleanedText.split('\n').filter(pair => pair.trim() !== '');
-
-                // Separate questions and answers
-                const questions = [];
-                const answers = [];
-
-                const regex = /\d+\.\s(.*?)\s\[(.*?)\]/g;
-                let match;
-
-                while ((match = regex.exec(cleanedText)) !== null) {
-                    questions.push(match[1]);
-                    answers.push(match[2]);
-                }
-
-                console.log("Questions:", questions);
-                console.log("Answers:", answers);
-
-                
-
-                
-                //const messageElement = document.createElement('div');
-                //messageElement.classList.add('message');
-                //messageElement.classList.add('message--sent');
-                //messageElement.innerHTML = `
-                //<div class="message__text">${data.completion.content}</div>
-                //`;
-                //chatLog.appendChild(messageElement);
-                //chatLog.scrollTop = chatLog.scrollHeight;
-
-                const cardGrid = document.createElement('div');
-                cardGrid.classList.add('card-grid');
-                cardGrid.innerHTML = createFlashcards();
-                chatLog.appendChild(cardGrid)
-
-                //flipping cards function
-                const flippableCards = document.querySelectorAll('.flashcard');
-
-                flippableCards.forEach(card => {
-                    card.addEventListener('click', () => {
-                        card.classList.toggle('flipped');
-                    });
-                });
-
-                const textarea = document.getElementById('message');
-
-                textarea.addEventListener('input', function () {
-                    this.style.height = 'auto';
-                    this.style.height = (this.scrollHeight) + 'px';
-                });
-
-
-
-
-                function createFlashcards() {
-                    let flashcardHTML = "";
-                    let counter = 0;
-                    for (question of questions) {
-                        flashcardHTML += `
-                            <div class="flashcard">
-                                <div class="card-content">
-                                    <div class="card-front">
-                                        ${question}
-                                    </div>
-                                    <div class="card-back">
-                                        ${answers[counter]}
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        counter += 1;
-
-                    }
-                    return flashcardHTML;
-                }
-            })
-        })
-    </script>
+	<script src="script.js"></script>
   </body>
 </html>

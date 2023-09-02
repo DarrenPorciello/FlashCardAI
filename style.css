@@ -1,9 +1,25 @@
 body {
-    display: flex;
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
 }
+
+
+
+h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 7vh;
+}
+
+
+.black {
+    background-color: black;
+    height: 8vh;
+    width: 100%;
+    display: block;
+    margin-bottom: 3vh;
+}
+
 
 .input-container {
     position: relative;
