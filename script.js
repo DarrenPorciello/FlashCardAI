@@ -20,9 +20,9 @@ form.addEventListener('submit', (e) => {
     messageElement.classList.add('message');
     messageElement.classList.add('message--sent');
     //console.log(messageText);
-    messageElement.innerHTML = `
-    <div class="message__text">${messageText}</div>
-    `;
+    //messageElement.innerHTML = `
+    //<div class="message__text">${messageText}</div>
+    //`;
     chatLog.appendChild(messageElement);
     chatLog.scrollTop = chatLog.scrollHeight;
     fetch('http://localhost:3000', {
