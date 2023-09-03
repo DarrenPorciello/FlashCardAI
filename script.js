@@ -3,8 +3,32 @@ let messages = []
 const chatLog = document.getElementById('chat-log');
 const message = document.getElementById('message');
 const form = document.querySelector('form');
+
+//Loading symbol fro fetch request
+const textInput = document.querySelector("#inputPart");
+const textOutput = document.querySelector("#showOutput");
+const btn = document.querySelector("#submitInput");
+
+// selecting loading div
+const loader = document.querySelector("#loading");
+
+// showing loading
+function displayLoading() {
+    loader.classList.add("display");
+    // to stop loading after some time
+    setTimeout(() => {
+        loader.classList.remove("display");
+    }, 10000);
+}
+
+// hiding loading 
+function hideLoading() {
+    loader.classList.remove("display");
+}
+
 form.addEventListener('submit', (e) => {
     e.preventDefault();
+    displayLoading();
 
     //Handling the number input
     const numericInput = document.getElementById("numericInput");
@@ -53,6 +77,9 @@ form.addEventListener('submit', (e) => {
         // Separate questions and answers
         const questions = [];
         const answers = [];
+
+        //Get rid of loading animation
+        hideLoading();
 
         const regex = /\d+\.\s(.*?)\s\[(.*?)\]/g;
         let match;
