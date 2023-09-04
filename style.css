@@ -27,7 +27,7 @@ h1 {
 
 textarea {
     width: 100%;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
@@ -123,13 +123,12 @@ textarea:focus {
     border-top: 6px solid #170dc9;
     border-radius: 100%;
     margin: auto;
-    visibility: hidden;
+    display: none;
     animation: spin 1s infinite linear;
 }
 
 #loading.display {
-    visibility: visible;
-    /*display: none;*/
+    display: block;
 }
 
 @keyframes spin {
