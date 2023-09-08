@@ -4,7 +4,7 @@ const chatLog = document.getElementById('chat-log');
 const message = document.getElementById('message');
 const form = document.querySelector('form');
 
-//Loading symbol fro fetch request
+//Loading symbol for fetch request
 const textInput = document.querySelector("#inputPart");
 const textOutput = document.querySelector("#showOutput");
 const btn = document.querySelector("#submitInput");
@@ -149,5 +149,60 @@ form.addEventListener('submit', (e) => {
             }
             return flashcardHTML;
         }
+
+        // JavaScript for flashcard selection
+        const flashcards = document.querySelectorAll('.flashcard');
+        const selectButton = document.getElementById('selectButton');
+        const addToSelectionButton = document.getElementById('addToSelectionButton');
+        const clearSelectionButton = document.getElementById('clearSelectionButton');
+        const selectedFlashcards = [];
+
+        selectButton.addEventListener('click', () => {
+            flashcards.forEach(flashcard => {
+                flashcard.classList.add('selectable');
+            });
+
+            selectButton.style.display = 'none';
+            addToSelectionButton.style.display = 'block';
+            clearSelectionButton.style.display = 'block';
+        });
+
+        addToSelectionButton.addEventListener('click', () => {
+            flashcards.forEach(flashcard => {
+                if (flashcard.classList.contains('selected')) {
+                    selectedFlashcards.push(flashcard);
+                    flashcard.classList.remove('selected');
+                }
+            });
+            addToSelectionButton.style.display = 'none';
+            clearSelectionButton.style.display = 'none';
+            selectButton.style.display = 'block';
+            alert(`Added ${selectedFlashcards.length} flashcards to the selection.`);
+            console.log(selectedFlashcards); // You can use the selectedFlashcards array as needed.
+            console.log(selectedFlashcards[0].textContent.trim())
+            console.log(selectedFlashcards[1].textContent.trim)
+            console.log(selectedFlashcards[2].textContent.trim())
+            console.log(selectedFlashcards[0])
+        });
+
+        clearSelectionButton.addEventListener('click', () => {
+            flashcards.forEach(flashcard => {
+                flashcard.classList.remove('selected');
+                flashcard.classList.remove('selectable');
+            });
+            addToSelectionButton.style.display = 'none';
+            clearSelectionButton.style.display = 'none';
+            selectButton.style.display = 'block';
+        });
+
+        // Click event for selecting/unselecting flashcards
+        flashcards.forEach(flashcard => {
+            flashcard.addEventListener('click', () => {
+                if (flashcard.classList.contains('selectable')) {
+                    flashcard.classList.toggle('selected');
+                }
+            });
+        });
+
     })
 })
