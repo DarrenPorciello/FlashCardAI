@@ -1,3 +1,53 @@
+
+
+/*
+const mongoose = require('mongoose');
+
+
+//Uses the database at the end of /, will create if it doesnt exist
+mongoose.connect('mongodb://127.0.0.1:27017/flashcards', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("Connection open!")
+    })
+    .catch(err => {
+        console.log("error detected")
+        console.log(err)
+    })
+
+// Define the Flashcard schema
+const flashcardSchema = new mongoose.Schema({
+    question: String,
+    answer: String,
+});
+  
+// Create a Flashcard model based on the schema
+const Flashcard = mongoose.model('Flashcard', flashcardSchema);
+  
+// Define the FlashcardDeck schema
+const flashcardDeckSchema = new mongoose.Schema({
+    name: String,
+    dateAdded: new Date(),
+    flashcards: [flashcardSchema]
+});
+  
+// Create a FlashcardDeck model based on the schema
+const FlashcardDeck = mongoose.model('FlashcardDeck', flashcardDeckSchema);
+  
+
+// Function to create and save a flashcard deck to MongoDB
+async function createFlashcardDeck(deckName, flashcards) {
+    try {
+      const deck = new FlashcardDeck({
+        name: deckName,
+        flashcards: flashcards
+      });
+      await deck.save();
+      console.log(`Flashcard deck "${deckName}" added successfully.`);
+    } catch (error) {
+      console.error('Error creating flashcard deck:', error);
+    }
+  }
+*/
 let messages = []
 
 const chatLog = document.getElementById('chat-log');
@@ -179,11 +229,34 @@ form.addEventListener('submit', (e) => {
             selectButton.style.display = 'block';
             alert(`Added ${selectedFlashcards.length} flashcards to the selection.`);
             console.log(selectedFlashcards); // You can use the selectedFlashcards array as needed.
-            console.log(selectedFlashcards[0].textContent.trim())
-            console.log(selectedFlashcards[1].textContent.trim)
-            console.log(selectedFlashcards[2].textContent.trim())
-            console.log(selectedFlashcards[0])
-        });
+            // Create an array to store the question and answer pairs
+            var flashcardsData = [];
+
+            // Loop through each flashcard element
+            selectedFlashcards.forEach(function (flashcardElement) {
+                // Get the card-back element which contains the answer
+                var cardBack = flashcardElement.querySelector('.card-back');
+            
+                // Access the innerText property of the card-back element
+                var cardAnswer = cardBack.textContent.trim();
+            
+                // Get the card-front element which contains the question
+                var cardFront = flashcardElement.querySelector('.card-front');
+            
+                // Access the innerText property of the card-front element
+                var cardQuestion = cardFront.textContent.trim();
+            
+                //Date
+                date = new Date();
+                // Push the question and answer pair into the flashcardData array
+                //flashcardSingle = new Flashcard(cardQuestion, cardAnswer, date)
+
+                flashcardsData.push(flashcardSingle)
+            });
+
+            // Log the flashcardData array containing question and answer pairs
+            console.log(flashcardsData);
+            });
 
         clearSelectionButton.addEventListener('click', () => {
             flashcards.forEach(flashcard => {
