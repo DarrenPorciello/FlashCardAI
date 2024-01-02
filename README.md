@@ -20,4 +20,7 @@ FlashcardAI uses the following dependencies to enhance the user interface:
 - [Bootstrap](https://getbootstrap.com/) (v4.4.1): A popular front-end framework for designing responsive and mobile-first websites.
 - [Google Fonts - DM Serif Display](https://fonts.google.com/specimen/DM+Serif+Display): A stylish and readable font used for an improved visual experience.
 
+## API Key
+Create .env file and input keys as needed.
+
 Thank you for using FlashcardAI! Happy studying!
